@@ -1,9 +1,10 @@
-import { ClerkProvider, SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
+import '@radix-ui/themes/styles.css';
+import { Theme } from '@radix-ui/themes';
+import Page from "./page";
+import { cookies } from 'next/headers'
 
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -15,23 +16,15 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const cookieStore = cookies()
+console.log(cookieStore.getAll())
   return (
-    <ClerkProvider>
       <html lang="en">
         <body>
-          <header>
-            <SignedOut>
-              <SignInButton />
-            </SignedOut>
-            <SignedIn>
-              <UserButton />
-            </SignedIn>
-          </header>
-          <main>
-            {children}
-          </main>
+          <Theme>
+            <Page />
+          </Theme>
         </body>
       </html>
-    </ClerkProvider>
   )
 }
